@@ -6,6 +6,6 @@ define("DB_USER", "dwes");
 define("DB_PASS", "dwes");
 
 /* Default options */
-//define("DEFAULT_CONTROLLER", "note");
-//define("DEFAULT_ACTION", "list");
+define("DEFAULT_CONTROLLER", "CRUDController");
+define("DEFAULT_ACTION", "list");
 ?>
