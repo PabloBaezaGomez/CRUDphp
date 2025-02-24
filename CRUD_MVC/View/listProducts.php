@@ -11,8 +11,8 @@ foreach ($products as $product) {
                     foreach ($families as $fam) {
                         if ($fam['cod'] == $product['family']) {
                             ?>
-                            <option selected value="<?php $fam['cod'] ?>"><?= $fam['name'] ?></option>
-                            <?php } else {
+                    <option value="<?= $fam['cod'] ?>" selected><?= $fam['name'] ?></option>
+                        <?php } else {
                             ?>
                             <option value="<?= $fam['cod'] ?>"><?= $fam['name'] ?></option>
                             <?php
