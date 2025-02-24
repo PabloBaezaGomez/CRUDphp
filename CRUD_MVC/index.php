@@ -1,29 +1,38 @@
-<?php 
+<?php
 
-require_once './config/config.php';
-require_once './Model/db.php';
+$accion = filter_input(INPUT_GET, 'accion', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if(!isset($_GET["controller"])) $_GET["controller"] = constant("DEFAULT_CONTROLLER");
-if(!isset($_GET["action"])) $_GET["action"] = constant("DEFAULT_ACTION");
+require_once 'Controller/CRUDController.php';
 
-$controller_path = 'controller/'.$_GET["controller"].'.php';
-
-/* Check if controller exists */
-if(!file_exists($controller_path)) $controller_path = 'controller/'.constant("DEFAULT_CONTROLLER").'.php';
-
-/* Load controller */
-require_once $controller_path;
-$controllerName = $_GET["controller"].'Controller';
-$controller = new $controllerName();
-
-/* Check if method is defined */
-$dataToView["data"] = array();
-if(method_exists($controller,$_GET["action"])) $dataToView["data"] = $controller->{$_GET["action"]}();
+CRUD\controllers\Controllers::default();
+if($accion == "moveProduct"){
+    CRUD\controllers\Controllers::CRUDControllerProducts();
+}
 
 
-/* Load views */
-require_once 'view/template/header.php';
-require_once 'view/'.$controller->view.'.php';
-require_once 'view/template/footer.php';
-
-?>
+/*try {
+    switch ($accion) {
+        case "logout":
+            Controladores::logout();
+            Controladores::default($smarty);
+            break;
+        case "autenticar":
+            Controladores::autenticar($smarty);            
+            break;
+        case "addtofav":
+            Controladores::addtofav($smarty);
+            break;
+        case "listfavs":
+            Controladores::listfavs($smarty);
+            break;
+        case "removefromfav":
+            Controladores::removefromfav($smarty);
+            break;
+        default:
+            Controladores::default($smarty);
+            break;
+    }
+} catch (AppException $e) {
+    ErrorController::handleException($e, $smarty);
+}
+*/
