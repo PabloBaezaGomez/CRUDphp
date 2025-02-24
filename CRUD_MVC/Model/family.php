@@ -1,18 +1,14 @@
 <?php
 
-namespace CRUD\model;
-
-use CRUD\Db;
-
 class Family {
-
     /*
-    The variables are both the table name
-    and the conection to the database
+      The variables are both the table name
+      and the conection to the database
      */
+
     private $cod;
     private $name;
-    
+
     public function __construct($cod, $name) {
         $this->cod = $cod;
         $this->name = $name;
@@ -25,35 +21,37 @@ class Family {
     public function getName() {
         return $this->name;
     }
-    
+
     /*
-    Select all the data from the table which name is 
-    stored in the class variable $table
+      Select all the data from the table which name is
+      stored in the class variable $table
      * returns all the data in the table
-    */
+     */
+
     public static function getFamilies() {
         $sql = "SELECT * FROM family";
-        $stmt = db::doSQL($sql);
-        $stmt->execute();
-        
-        return $stmt->fetchAll();
+        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
+        $result = $dwes->query($sql);
+        $families = $result->fetchAll();
+        return $families;
     }
-    
+
     /*
      * Receiving a code, selects all the data from
      * the family which cod is the same
      * Returns all the info in that row
-    */
+     */
+
     public function getFamilyByCod($cod) {
         if (is_null($cod))
             return false;
 
         $sql = "SELECT * FROM " . $this->table . " WHERE cod = ?";
         $stmt = db::doSQL($sql, [$cod]);
-        
+
         return $stmt->fetch();
     }
-    
+
     /**
      * Receiving all the data needed, updates or create a row
      * @param type $family
@@ -80,25 +78,26 @@ class Family {
         if (isset($family["cod"]))
             $cod = $family["cod"];
 
-        if($cod == "" || $name == ""){
+        if ($cod == "" || $name == "") {
             return;
         }
         /* Database operations 
-        if the family already exists, update the values
+          if the family already exists, update the values
          *          */
         if ($exists) {
             $sql = "UPDATE " . $this->table . " SET name=?, cod=? WHERE cod=?";
             $stmt = db::doSQL($sql, [$name, $cod, $prevCod]);
         } else {
-            /*If it doesn't, it creates a new one*/
+            /* If it doesn't, it creates a new one */
             $sql = "INSERT INTO " . $this->table . " (cod, name) values(?, ?)";
             $stmt = db::doSQL($sql, [$name, $cod]);
         }
 
         return $cod;
     }
-    
-    /*Deletes a family which key Value is the same as the one of the parametres*/
+
+    /* Deletes a family which key Value is the same as the one of the parametres */
+
     public function deleteFamilyByCod($cod) {
         $sql = "DELETE FROM " . $this->table . " WHERE cod = ?";
         return db::doSQL($sql, [$cod]);
