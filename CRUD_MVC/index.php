@@ -5,8 +5,19 @@ $accion = filter_input(INPUT_GET, 'accion', FILTER_SANITIZE_SPECIAL_CHARS);
 require_once 'Controller/CRUDController.php';
 
 CRUD\controllers\Controllers::default();
-if($accion == "moveProduct"){
-    CRUD\controllers\Controllers::CRUDControllerProducts();
+
+switch ($accion) {
+    case "moveProduct":
+        CRUD\controllers\Controllers::CRUDControllerProducts();
+    case "deleteProduct":
+        CRUD\controllers\Controllers::deleteProduct();
+        CRUD\controllers\Controllers::CRUDControllerProducts();
+    case "updateProduct":
+        CRUD\controllers\Controllers::updateProduct();
+        CRUD\controllers\Controllers::CRUDControllerProducts();
+    case "insertProduct":
+        CRUD\controllers\Controllers::insertProduct();
+        CRUD\controllers\Controllers::CRUDControllerProducts();
 }
 
 
