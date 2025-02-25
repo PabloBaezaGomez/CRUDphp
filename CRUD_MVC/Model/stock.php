@@ -1,116 +1,55 @@
 <?php
 
-namespace CRUD\model;
+require_once 'db.php';
 
-use CRUD\Db;
+class Stock {
 
-class Stock
-{
-  /*
-    The variables are both the table name and the conection to the database
-  */
-  private $product;
-  private $store;
-  private $units;
+    public static function getStocks() {
+        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
+        $sql = "SELECT * FROM stock";
+        $result = $dwes->query($sql);
+        $stocks = $result->fetchAll();
+        unset($dwes);
+        return $stocks;
+    }
 
-  public function __construct($product, $store, $units)
-  {
-    $this->product = $product;
-    $this->store = $store;
-    $this->units = $units;
-  }
+    public static function getStockByProduct($product) {
+        if (is_null($product)) return false;
+        
+        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
+        $sql = $dwes->prepare("SELECT * FROM stock WHERE product = ?");
+        $sql->execute([$product]);
+        $result = $sql->fetch();
+        unset($dwes);
+        return $result;
+    }
 
-  public function getProduct()
-  {
-    return $this->product;
-  }
+    public static function saveStock($product, $store, $units) {
+        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
+        
+        // Check if stock exists
+        $sql = $dwes->prepare("SELECT * FROM stock WHERE product = ? AND store = ?");
+        $sql->execute([$product, $store]);
+        $exists = $sql->fetch();
 
-  public function getStore()
-  {
-    return $this->store;
-  }
-
-  public function getUnits()
-  {
-    return $this->units;
-  }
-
-  /*  Select all the data from the table which name is stored in the class variable $table
-    returns all the data in the table
-  */
-  public static function getStocks()
-  {
-    $sql = "SELECT * FROM stock";
-    $stmt = db::doSQL($sql);
-    $stmt->execute();
-
-    return $stmt->fetchAll();
-  }
-
-  /*  Receiving a code, selects all the data from the stock which product is the same
-        Returns all the info in that row
-    */
-  public function getStockByProduct($product)
-  {
-    if (is_null($product))
-        return false;
-
-    $sql = "SELECT * FROM " . $this->table . " WHERE product = ?";
-    $stmt = db::doSQL($sql, [$product]);
-
-    return $stmt->fetch();
-  }
-
-  /**
-   * Receiving all the data needed, updates or create a row
-   * @param type $stock
-   * @return product of the stock updated or created
-   */
-  public function saveStock($stock)
-  {
-    /* Set default values */
-    $product = $units = $store = "";
-
-    /* Check if exists */
-    $exists = false;
-    if (isset($stock["product"]) && $stock["product"] != '') {
-        $actualStock = $this->getStockByProduct($stock["product"]);
-        if (isset($actualStock["product"])) {
-            $exists = true;
+        if ($exists) {
+            // Update existing stock
+            $sql = $dwes->prepare("UPDATE stock SET units = ? WHERE product = ? AND store = ?");
+            $sql->execute([$units, $product, $store]);
+        } else {
+            // Insert new stock
+            $sql = $dwes->prepare("INSERT INTO stock (product, store, units) VALUES (?, ?, ?)");
+            $sql->execute([$product, $store, $units]);
         }
+        
+        unset($dwes);
+        return $product;
     }
 
-    /* Received values */
-    if (isset($stock["units"]))
-        $units = $stock["units"];
-    if (isset($stock["product"]))
-        $product = $stock["product"];
-    if (isset($stock["store"]))
-        $store = $stock["store"];
-
-    if ($units == "" || $product == "" || $store == "") {
-        return false;
+    public static function deleteStock($product, $store) {
+        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
+        $sql = $dwes->prepare("DELETE FROM stock WHERE product = ? AND store = ?");
+        $sql->execute([$product, $store]);
+        unset($dwes);
     }
-
-    /* Database operations */
-    if ($exists) {
-        // Update existing stock
-        $sql = "UPDATE " . $this->table . " SET units = ?, store = ? WHERE product = ?";
-        $stmt = db::doSQL($sql, [$units, $store, $product]);
-    } else {
-        // Insert new stock
-        $sql = "INSERT INTO " . $this->table . " (product, store, units) VALUES (?, ?, ?)";
-        $stmt = db::doSQL($sql, [$product, $store, $units]);
-    }
-
-    return $product;
-  }
-
-  /* Deletes the stock which key Value is the same as the one of the parametres
-    */
-  public function deleteStockByProduct($product, $store)
-  {
-    $sql = "DELETE FROM " . $this->table . " WHERE product = ? AND store = ?";
-    return db::doSQL($sql, [$product, $store]);
-  }
 }
