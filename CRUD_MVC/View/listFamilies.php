@@ -1,20 +1,17 @@
-<table>
-                <?php
-                $sql = "SELECT cod, name FROM family";
-                $result = $dwes->query($sql);
-                $row = $result->fetch();
-                while ($row) {
-                    echo "<form action=" . $_SERVER['PHP_SELF'] . " method='post'>";
-                    echo '<tr>';
-                    echo "<td><input type='text' name='cod' value=' ${row['cod']}'></td>";
-                    echo "<td><input type='text' name='name' value=' ${row['name']}'</td>";
-                    echo '<td><input type="submit" value="Update" name="update"</td>';
-                    echo '<td><input type="submit" value="Delete" name="delete"</td>';
-                    echo "<input type=hidden name='delete_code' value='${row['cod']}'>";
-                    echo '</tr>';
-                    echo '</form>';
-                    $row = $result->fetch();
-                }
-                ?>
+<?php
+foreach ($families as $family) {
+    ?>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <tr>
+            <td><input type='text' name='cod' value='<?= $family['cod'] ?>'></td>
+            <td><input type='text' name='name' value='<?= $family['name'] ?>'></td>
 
-            </table>
+            <td><button type="submit" formaction="index.php?accion=updateFamily">Update</button></td>
+            <td><button type="submit" formaction='index.php?accion=deleteFamily'>Delete</button></td>
+            <input type=hidden name='delete_code' value='<?= $family['cod'] ?>'>
+
+        </tr>
+    </form>
+    <?php
+}
+?>
