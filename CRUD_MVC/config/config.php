@@ -1,7 +1,6 @@
 <?php
 
-define("DB_HOST", "localhost");
-define("DB", "dwes");
+define("DB_DSN","mysql:host=localhost;dbname=dwes");
 define("DB_USER", "dwes");
 define("DB_PASS", "dwes");
 
