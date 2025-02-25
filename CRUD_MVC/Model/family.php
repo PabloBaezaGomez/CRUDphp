@@ -21,14 +21,14 @@ class Family
 
     public static function deleteFamily($cod)
     {
-        $sql = $dwes->prepare('DELETE FROM family WHERE family.cod = :cod');
+        $sql = 'DELETE FROM family WHERE family.cod = :cod';
         $result = CRUD\DB::doSQL($sql, ['cod'=>$cod]);
         return $result;
     }
 
     public static function insertFamily($cod, $name)
     {
-        $sql = $dwes->prepare('INSERT INTO family (cod, name) VALUES (:cod, :name);');
+        $sql = 'INSERT INTO family (cod, name) VALUES (:cod, :name);';
         $result = CRUD\DB::doSQL($sql, ['cod'=>$cod,'name'=>$name]);
         return $result;
     }
