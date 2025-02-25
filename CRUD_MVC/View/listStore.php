@@ -1,7 +1,7 @@
 <?php
 foreach ($stores as $store) {
     ?>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <form action="index.php" method="post">
         <tr>
             <td><input type='text' name='cod' value='<?= $store['cod'] ?>'></td>
             <td><input type='text' name='name' value='<?= $store['name'] ?>'></td>
