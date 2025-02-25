@@ -7,7 +7,7 @@
     </tr>
     <?php foreach ($stocks as $stock): ?>
         <tr>
-            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+            <form action="index.php" method="post">
                 <td>
                     <select name="product">
                         <?php foreach ($products as $product): ?>
