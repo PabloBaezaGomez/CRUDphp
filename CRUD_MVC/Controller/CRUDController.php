@@ -4,6 +4,8 @@ namespace CRUD\controllers;
 
 require_once 'Model/product.php';
 require_once 'Model/family.php';
+require_once 'Model/stock.php';
+require_once 'Model/store.php';
 
 class Controllers {
 
@@ -15,10 +17,11 @@ class Controllers {
         require_once 'View/buttonStore.php';
     }
 
+    //Table Products
     public static function CRUDControllerProducts() {
         $families = \Family::getFamilies();
         require_once 'View/InsertProduct.php';
-        $products = \Product::getProducts();
+        $products = \Product::getProductsDB();
         require_once 'View/listProducts.php';
     }
 
@@ -51,4 +54,39 @@ class Controllers {
             \Product::updateProduct($prevCode, $cod, $shortName, $rrp, $desc, $family);
         }
     }
+    
+    //Table Families
+    public static function CRUDControllerFamilies() {
+        $families = \Family::getFamilies();
+        require_once 'View/InsertFamily.php';
+        require_once 'View/listFamilies.php';
+    }
+
+    public static function insertFamily() {
+        if (isset($_POST['insert_cod'])) {
+            $name = trim($_POST['insert_name']);
+            $cod = trim($_POST['insert_cod']);
+            \Family::insertFamily($cod, $name);
+        }
+    }
+
+    public static function deleteFamily() {
+        if (isset($_POST['delete_code'])) {
+            $prevCode = trim($_POST['delete_code']);
+            \Family::deleteFamily($prevCode);
+        }
+    }
+
+    public static function updateFamily() {
+        if (isset($_POST['delete_code'])) {
+            $prevCode = trim($_POST['delete_code']);
+            $name = trim($_POST['name']);
+            $cod = trim($_POST['cod']);
+            \Family::updateFamily($prevCode, $cod, $name);
+        }
+    }
+    
+    //Table Stock
+    
+    //Table Stores
 }
