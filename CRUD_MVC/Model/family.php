@@ -7,35 +7,30 @@ class Family
     public static function getFamilies()
     {
         $sql = "SELECT * FROM family";
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
-        $result = $dwes->query($sql);
-        $families = $result->fetchAll();
+        $families = CRUD\DB::doSQL($sql);
         return $families;
     }
 
 
     public static function updateFamily($prevCode, $cod, $name)
     {
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
-        $sql = $dwes->prepare('UPDATE family SET cod=?, name=?  WHERE family.cod=?');
-        $sql->execute([$cod, $name, $prevCode]);
-        unset($dwes);
+        $sql = 'UPDATE family SET cod=:cod, name=:name WHERE family.cod=:prevCode';
+        $result = CRUD\DB::doSQL($sql, ['cod'=>$cod,'name'=>$name,'prevCode'=>$prevCode]);
+        return $result;
     }
 
     public static function deleteFamily($cod)
     {
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
-        $sql = $dwes->prepare('DELETE FROM family WHERE family.cod = ?');
-        $sql->execute([$cod]);
-        unset($dwes);
+        $sql = $dwes->prepare('DELETE FROM family WHERE family.cod = :cod');
+        $result = CRUD\DB::doSQL($sql, ['cod'=>$cod]);
+        return $result;
     }
 
     public static function insertFamily($cod, $name)
     {
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
-        $sql = $dwes->prepare('INSERT INTO family (cod, name) VALUES (?, ?);');
-        $sql->execute([$cod, $name]);
-        unset($dwes);
+        $sql = $dwes->prepare('INSERT INTO family (cod, name) VALUES (:cod, :name);');
+        $result = CRUD\DB::doSQL($sql, ['cod'=>$cod,'name'=>$name]);
+        return $result;
     }
 }
 
