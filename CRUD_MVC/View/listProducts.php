@@ -1,6 +1,6 @@
 <?php
 foreach ($products as $product) {
-    ?><form action="index.php" method='post' id="updateDelete">
+    ?><form action="index.php" method='post'>
         <tr>
             <td><input type='text' name='cod' value='<?= $product['cod'] ?>'></td>
             <td><input type='text' name='short_name' value='<?= $product['short_name'] ?>'</td>
