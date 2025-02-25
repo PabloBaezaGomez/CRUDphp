@@ -1,18 +1,17 @@
 <?php
 
 namespace CRUD;
+require_once 'config/config.php';
+require_once 'exceptions/AppException.php';
 
-
-use CRUD\exceptions;
-
-class Db {
+class DB {
 
     private static $conn = null;
 
     public static function getConn() {
         if (!(static::$conn instanceof \PDO)) {
             try {
-                static::$conn = new \PDO(\DB_DSN, \DB_USER, \DB_PASSWD,
+                static::$conn = new \PDO(\DB_DSN, \DB_USER, \DB_PASS,
                         array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
             } catch (\PDOException $e) {
                 static::$conn = false;
@@ -28,6 +27,15 @@ class Db {
         static::$conn = null;
     }
 
+    /**
+     * Método que ejecuta una consulta SQL inyectandole datos opcionales.
+     * @param $sql consulta SQL conforme a PDO Prepared Statement.
+     * @param $data array asociativo con los datos a reemplazar en la consulta (conforme a PDO Prepared Statement)
+     * @return  Si la consulta es tipo SELECT se obtendrá un array asociativo con todos los registros.
+     * Si la consulta es tipo INSERT/UPDATE/DELETE se obtendrá el número de registros afectados.    
+     * @throws AppException Si algo en la consulta va mal eleva una excepción tipo AppException con
+     * uno de los códigos disponibles en función del problema producido.
+     */
     public static function doSQL($sql, $data = []) {
         $ret = false;
         $pdo = self::getConn();
@@ -56,5 +64,3 @@ class Db {
         return $ret;
     }
 }
-
-?>
