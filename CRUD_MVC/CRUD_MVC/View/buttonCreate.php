@@ -1,1 +1,0 @@
-<button>Create <?= $table?></button>
