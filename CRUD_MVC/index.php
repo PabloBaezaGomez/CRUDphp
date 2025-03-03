@@ -12,19 +12,19 @@ CRUD\controllers\Controllers::default();
 
 switch ($accion) {
     case "moveProduct":
-        CRUD\controllers\Controllers::CRUDControllerProducts();
+        CRUD\productController\ProductController::CRUDControllerProducts();
         break;
     case "deleteProduct":
-        CRUD\controllers\Controllers::deleteProduct();
-        CRUD\controllers\Controllers::CRUDControllerProducts();
+        CRUD\productController\ProductController::deleteProduct();
+        CRUD\productController\ProductController::CRUDControllerProducts();
         break;
     case "updateProduct":
-        CRUD\controllers\Controllers::updateProduct();
-        CRUD\controllers\Controllers::CRUDControllerProducts();
+        CRUD\productController\ProductController::updateProduct();
+        CRUD\productController\ProductController::CRUDControllerProducts();
         break;
     case "insertProduct":
-        CRUD\controllers\Controllers::insertProduct();
-        CRUD\controllers\Controllers::CRUDControllerProducts();
+        CRUD\productController\ProductController::insertProduct();
+        CRUD\productController\ProductController::CRUDControllerProducts();
         break;
     case "moveFamily":
         CRUD\familyController\FamilyController::CRUDControllerFamilies();
@@ -72,31 +72,3 @@ switch ($accion) {
         CRUD\storeController\StoreController::CRUDControllerStore();
         break;
 }
-
-
-/*try {
-    switch ($accion) {
-        case "logout":
-            Controladores::logout();
-            Controladores::default($smarty);
-            break;
-        case "autenticar":
-            Controladores::autenticar($smarty);            
-            break;
-        case "addtofav":
-            Controladores::addtofav($smarty);
-            break;
-        case "listfavs":
-            Controladores::listfavs($smarty);
-            break;
-        case "removefromfav":
-            Controladores::removefromfav($smarty);
-            break;
-        default:
-            Controladores::default($smarty);
-            break;
-    }
-} catch (AppException $e) {
-    ErrorController::handleException($e, $smarty);
-}
-*/
