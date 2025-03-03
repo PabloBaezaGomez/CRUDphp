@@ -3,34 +3,28 @@
 require_once 'db.php';
 
 class Product {
-
-    public static function getProducts() {
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
+    
+    public static function getProductsDB() {
         $sql = "SELECT cod, short_name, description, RRP, family FROM product";
-        $result = $dwes->query($sql);
-        $products = $result->fetchAll();
-        unset($dwes);
-        return $products;
+        $result = CRUD\DB::doSQL($sql);
+        return $result;
     }
 
     public static function updateProduct($prevCode, $cod, $shortName, $rrp, $desc, $family) {
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
-        $sql = $dwes->prepare('UPDATE product SET short_name=?, cod=?, description=?, RRP=?, family=?  WHERE product.cod=?');
-        $sql->execute([$shortName, $cod, $desc, $rrp, $family, $prevCode]);
-        unset($dwes);
+        $sql = 'UPDATE product SET short_name=:name, cod=:cod, description=:desc, RRP=:rrp, family=:family  WHERE product.cod=:prevCod';
+        $result = CRUD\DB::doSQL($sql, ['name'=>$shortName,'cod'=>$cod,'desc'=>$desc,'rrp'=>$rrp,'family'=>$family,'prevCod'=>$prevCode]);
+        return $result;
     }
 
     public static function deleteProduct($cod) {
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
-        $sql = $dwes->prepare('DELETE FROM product WHERE product.cod = ?');
-        $sql->execute([$cod]);
-        unset($dwes);
+        $sql = 'DELETE FROM product WHERE product.cod = :cod';
+        $result = CRUD\DB::doSQL($sql, ['cod'=>$cod]);
+        return $result;
     }
 
     public static function insertProduct($cod, $shortName, $rrp, $desc, $family) {
-        $dwes = new PDO("mysql:host=localhost;dbname=dwes", "dwes", "dwes");
-        $sql = $dwes->prepare('INSERT INTO product (cod, short_name, description, RRP, family) VALUES (?, ?, ?, ?, ?);');
-        $sql->execute([$cod, $shortName, $desc, $rrp, $family]);
-        unset($dwes);
+        $sql = 'INSERT INTO product (cod, short_name, description, RRP, family) VALUES (:cod, :name, :desc, :rrp, :family);';
+        $result = CRUD\DB::doSQL($sql, ['cod'=>$cod,'name'=>$shortName,'desc'=>$desc,'rrp'=>$rrp,'family'=>$family]);
+        return $result;
     }
 }

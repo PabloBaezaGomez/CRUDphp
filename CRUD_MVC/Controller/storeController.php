@@ -1,62 +1,49 @@
 <?php
 
-require_once '../Model/store.php';
+namespace CRUD\storeController;
 
-class storeController {
+require_once 'Model/product.php';
+require_once 'Model/family.php';
+require_once 'Model/stock.php';
+require_once 'Model/store.php';
 
-    public $page_title;
-    public $view;
-    private $noteObj;
+class StoreController {
 
-    // Construct
-    public function __construct(){
-        $this->view = 'list_store';
-        $this->page_title= '';
-        $this->noteObj = new Store();
-
-    }
-    
-    // List all stores
-    public function list() {
-        $this->page_title = 'Store list';
-        return $this->storeObj->getStores();
+    public static function CRUDControllerStore() {
+        $stores = \Store::getStores();
+        require_once 'View/InsertStore.php';
+        require_once 'View/listStore.php';
     }
 
-
-    // Load stores for edit
-
-    public function edit($cod = null) {
-        $this->page_title = 'Edit store';
-        $this->view = 'edit_store';
-
-        /*cod can from get param or method param */
-        if(isset($_GET["cod"])) $cod = $_GET["cod"];
-        return $this->storeObj->getStoreByCod($cod);
-
+    public static function insertStore() {
+        if (isset($_POST['insert_cod'])) {
+            $cod = trim($_POST['insert_cod']);
+            $name = trim($_POST['insert_name']);
+            $tlf = trim($_POST['insert_tlf']);
+            \Store::insertStores($cod, $name, $tlf);
+        }
     }
 
-    // Create or update stores
-    public function save() {
-        $this->view = 'edit_store';
-        $this->page_title = 'Edit store';
-        $cod = $this->storeObj->save($_POST);
-        $result = $this->storeObj->getStoreByCod($cod);
-        $_GET["response"] = true;
-        return $result;
+    public static function deleteStore() {
+        if (isset($_POST['delete_code'])) {
+            $cod = trim($_POST['delete_code']);
+            \Store::deleteStores($cod);
+        }
     }
 
-    // Confirm delete
-    public function confirmDelete() {
-        $this->page_title = 'Delete store';
-        $this->view = 'confirm_delete_store';
-        return $this->storeObj->getStoreByCod($_GET["cod"]);
+    public static function updateStore() {
+        if (isset($_POST['cod'])) {
+            $cod = trim($_POST['cod']);
+            $name = trim($_POST['name']);
+            if (isset($_POST['tlf'])) {
+                $tlf = trim($_POST['tlf']);
+            } else {
+                $tlf = null;
+            }
+            $prevCode = trim($_POST['delete_code']);
+            \Store::updateStores($prevCode, $cod, $name, $tlf);
+        }
     }
-
-    // Delete
-    public function delete() {
-        $this->page_title = 'Store list';
-        $this->view = 'delete_store';
-        return $this->storeObj->deleteStoreByCod($_POST["cod"]);
-    }
-
 }
+
+?>

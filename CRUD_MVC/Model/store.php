@@ -9,7 +9,7 @@ class Store
     {
         $sql = "SELECT cod, name, tlf FROM store";
         $result = CRUD\DB::doSQL($sql);
-        return $stores;
+        return $result;
     }
 
     public static function updateStores($prevCode, $cod, $name, $tlf)
@@ -21,7 +21,7 @@ class Store
 
     public static function deleteStores($cod)
     {
-        $sql = 'DELETE FROM stores WHERE store.cod = ?';
+        $sql = 'DELETE FROM store WHERE store.cod = :cod';
         $result = CRUD\DB::doSQL($sql, ['cod'=>$cod]);
         return $result;
     }

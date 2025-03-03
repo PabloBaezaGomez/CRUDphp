@@ -1,60 +1,43 @@
 <?php
 
-require_once '../Model/family.php';
+namespace CRUD\familyController;
 
-class familyController {
-    
-    public $page_title;
-    public $view;
+require_once 'Model/product.php';
+require_once 'Model/family.php';
+require_once 'Model/stock.php';
+require_once 'Model/store.php';
 
-    public function __construct() {
-        $this->view = 'list_family';
-        $this->page_title = '';
-        $this->familyObj = new Family();
+class FamilyController {
+
+    public static function CRUDControllerFamilies() {
+        $families = \Family::getFamilies();
+        require_once 'View/InsertFamily.php';
+        require_once 'View/listFamilies.php';
     }
 
-    /* List all familys */
-
-    public function list() {
-        $this->page_title = 'Families list';
-        return $this->familyObj->getFamilies();
+    public static function insertFamily() {
+        if (isset($_POST['insert_cod'])) {
+            $name = trim($_POST['insert_name']);
+            $cod = trim($_POST['insert_cod']);
+            \Family::insertFamily($cod, $name);
+        }
     }
 
-    /* Load family for edit */
-
-    public function edit($id = null) {
-        $this->page_title = 'Edit family';
-        $this->view = 'edit_family';
-        /* Id can from get param or method param */
-        if (isset($_GET["cod"]))
-            $cod = $_GET["cod"];
-        return $this->familyObj->getFamilyByCod($cod);
+    public static function deleteFamily() {
+        if (isset($_POST['delete_code'])) {
+            $prevCode = trim($_POST['delete_code']);
+            \Family::deleteFamily($prevCode);
+        }
     }
 
-    /* Create or update family */
-
-    public function save() {
-        $this->view = 'edit_family';
-        $this->page_title = 'Edit family';
-        $cod = $this->familyObj->save($_POST);
-        $result = $this->familyObj->getFamilyByCod($cod);
-        $_GET["response"] = true;
-        return $result;
-    }
-
-    /* Confirm to delete */
-
-    public function confirmDelete() {
-        $this->page_title = 'Delete Family';
-        $this->view = 'confirm_delete_family';
-        return $this->familyObj->getFamilyByCod($_GET["cod"]);
-    }
-
-    /* Delete */
-
-    public function delete() {
-        $this->page_title = 'Family list';
-        $this->view = 'delete_family';
-        return $this->familyObj->deleteFamilyByCod($_POST["cod"]);
+    public static function updateFamily() {
+        if (isset($_POST['delete_code'])) {
+            $prevCode = trim($_POST['delete_code']);
+            $name = trim($_POST['name']);
+            $cod = trim($_POST['cod']);
+            \Family::updateFamily($prevCode, $cod, $name);
+        }
     }
 }
+
+?>

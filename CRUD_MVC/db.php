@@ -15,9 +15,9 @@ class DB {
                         array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
             } catch (\PDOException $e) {
                 static::$conn = false;
-                throw new AppException
+                throw new \CRUD\exceptions\AppException
                                 ('Error DB. No se puede continuar. Revisa el valor de las constantes DB_USER y DB_PASSWD en el archivo conf.php.',
-                                AppException::DB_UNABLE_TO_CONNECT);
+                                \CRUD\exceptions\AppException::DB_UNABLE_TO_CONNECT);
             }
         }
         return static::$conn;
@@ -40,8 +40,8 @@ class DB {
         $ret = false;
         $pdo = self::getConn();
         if (!$pdo)
-            throw new AppException('Error DB: no se puede conectar con la base de datos',
-                            AppException::DB_NOT_CONNECTED);
+            throw new \CRUD\exceptions\AppException('Error DB: no se puede conectar con la base de datos',
+                            \CRUD\exceptions\AppException::DB_NOT_CONNECTED);
         try {
             $stmt = $pdo->prepare($sql);
             if ($stmt->execute($data)) {
@@ -55,11 +55,11 @@ class DB {
                 );
         } catch (\PDOException $ex) {
             if ($ex->getCode() === '23000') {
-                throw new AppException('Error DB: la consulta realizada incumple las restricciones de la base de datos.',
-                                AppException::DB_CONSTRAINT_VIOLATION_IN_QUERY);
+                throw new \CRUD\exceptions\AppException('Error DB: la consulta realizada incumple las restricciones de la base de datos.',
+                                \CRUD\exceptions\AppException::DB_CONSTRAINT_VIOLATION_IN_QUERY);
             }
-            throw new AppException('Error DB: error en la consulta.',
-                            AppException::DB_ERROR_IN_QUERY);
+            throw new \CRUD\exceptions\AppException('Error DB: error en la consulta.',
+                            \CRUD\exceptions\AppException::DB_ERROR_IN_QUERY);
         }
         return $ret;
     }

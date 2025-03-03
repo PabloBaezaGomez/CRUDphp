@@ -3,6 +3,10 @@
 $accion = filter_input(INPUT_GET, 'accion', FILTER_SANITIZE_SPECIAL_CHARS);
 
 require_once 'Controller/CRUDController.php';
+require_once 'Controller/familyController.php';
+require_once 'Controller/productController.php';
+require_once 'Controller/stockController.php';
+require_once 'Controller/storeController.php';
 
 CRUD\controllers\Controllers::default();
 
@@ -23,24 +27,50 @@ switch ($accion) {
         CRUD\controllers\Controllers::CRUDControllerProducts();
         break;
     case "moveFamily":
-        CRUD\controllers\Controllers::CRUDControllerFamilies();
+        CRUD\familyController\FamilyController::CRUDControllerFamilies();
         break;
     case "deleteFamily":
-        CRUD\controllers\Controllers::deleteFamily();
-        CRUD\controllers\Controllers::CRUDControllerFamilies();
+        CRUD\familyController\FamilyController::deleteFamily();
+        CRUD\familyController\FamilyController::CRUDControllerFamilies();
         break;
     case "updateFamily":
-        CRUD\controllers\Controllers::updateFamily();
-        CRUD\controllers\Controllers::CRUDControllerFamilies();
+        CRUD\familyController\FamilyController::updateFamily();
+        CRUD\familyController\FamilyController::CRUDControllerFamilies();
         break;
     case "insertFamily":
-        CRUD\controllers\Controllers::insertFamily();
-        CRUD\controllers\Controllers::CRUDControllerFamilies();
+        CRUD\familyController\FamilyController::insertFamily();
+        CRUD\familyController\FamilyController::CRUDControllerFamilies();
         break;
     case "moveStock":
-        CRUD\controllers\Controllers::CRUDControllerStock();
+        CRUD\stockController\StockController::CRUDControllerStock();
         break;
-        case :
+    case "deleteStock":
+        CRUD\stockController\StockController::deleteStock();
+        CRUD\stockController\StockController::CRUDControllerStock();
+        break;
+    case "updateStock":
+        CRUD\stockController\StockController::updateStock();
+        CRUD\stockController\StockController::CRUDControllerStock();
+        break;
+    case "insertStock":
+        CRUD\stockController\StockController::insertStock();
+        CRUD\stockController\StockController::CRUDControllerStock();
+        break;
+    case "moveStore":
+        CRUD\storeController\StoreController::CRUDControllerStore();
+        break;
+    case "deleteStore":
+        CRUD\storeController\StoreController::deleteStore();
+        CRUD\storeController\StoreController::CRUDControllerStore();
+        break;
+    case "updateStore":
+        CRUD\storeController\StoreController::updateStore();
+        CRUD\storeController\StoreController::CRUDControllerStore();
+        break;
+    case "insertStore":
+        CRUD\storeController\StoreController::insertStore();
+        CRUD\storeController\StoreController::CRUDControllerStore();
+        break;
 }
 
 

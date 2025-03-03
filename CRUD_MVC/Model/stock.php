@@ -29,14 +29,14 @@ class Stock {
             $product = CRUD\DB::doSQL($sql, ['units'=>$units,'product'=>$product,'store'=>$store]);
         } else {
             // Insert new stock
-            $sql = $dwes->prepare("INSERT INTO stock (product, store, units) VALUES (:product, :store, :units)");
+            $sql = "INSERT INTO stock (product, store, units) VALUES (:product, :store, :units)";
             $product = CRUD\DB::doSQL($sql, ['product'=>$product,'store'=>$store,'units'=>$units]);
         }
         return $product;
     }
 
     public static function deleteStock($product, $store) {
-        $sql = $dwes->prepare("DELETE FROM stock WHERE product = :product AND store = :store");
+        $sql = "DELETE FROM stock WHERE product = :product AND store = :store";
         $result = CRUD\DB::doSQL($sql, ['product'=>$product,'store'=>$store]);
         return $result;
     }

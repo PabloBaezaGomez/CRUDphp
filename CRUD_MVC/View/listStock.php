@@ -32,10 +32,10 @@
                     <input type="number" value="<?= $stock['units'] ?>" name="units">
                 </td>
                 <td>
-                    <input type="submit" value="Update" name="update">
+                    <input type="submit" value="Update" formaction="index.php?accion=updateStock" name="update">
                 </td>
                 <td>
-                    <input type="submit" value="Delete" name="delete">
+                    <input type="submit" value="Delete" formaction="index.php?accion=deleteStock" name="delete">
                 </td>
                 <input type="hidden" name="delete_product" value="<?= $stock['product'] ?>">
                 <input type="hidden" name="delete_store" value="<?= $stock['store'] ?>">
