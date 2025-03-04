@@ -7,11 +7,14 @@ use model;
 class StockController {
 
     public static function CRUDControllerStock() {
+        require_once 'View/template/header.html';
         $stocks = \model\Stock::getStocks();
         $products = \model\Product::getProductsDB();
         $stores = \model\Store::getStores();
         require_once 'View/InsertStock.php';
+        require_once 'View/template/closeHeader.html';
         require_once 'View/listStock.php';
+        require_once 'View/template/footer.html';
     }
 
     public static function insertStock() {

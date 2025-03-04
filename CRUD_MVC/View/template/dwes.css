@@ -1,14 +1,39 @@
 h1 {
     margin-bottom:0;
 }
+
 header {
     background-color:#ddf0a4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 1em;
 }
+
+header button{
+    padding: 1em;
+    border-radius: 10px;
+}
+
+main form{
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main form input, main form button{
+    margin: 0.5em;
+}
+
 main {
     background-color:#EEEEEE;
 }
+
 footer {
     background-color:#ddf0a4;
-    color:#ff0000;
     height:30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

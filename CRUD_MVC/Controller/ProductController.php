@@ -7,10 +7,13 @@ use model;
 class ProductController {
 
     public static function CRUDControllerProducts() {
+        require_once 'View/template/header.html';
         $families = \model\Family::getFamilies();
         require_once 'View/InsertProduct.php';
+        require_once 'View/template/closeHeader.html';
         $products = \model\Product::getProductsDB();
         require_once 'View/listProducts.php';
+        require_once 'View/template/footer.html';
     }
 
     public static function insertProduct() {

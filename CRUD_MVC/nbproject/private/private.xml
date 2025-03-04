@@ -3,11 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/CRUD_MVC/Model/stock.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/View/template/footer.html</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/View/InsertStore.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/composer.json</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Model/Product.php</file>
             <file>file:/C:/xampp/htdocs/CRUD_MVC/index.php</file>
-            <file>file:/C:/xampp/htdocs/CRUD_MVC/Controller/CRUDController.php</file>
-            <file>file:/C:/xampp/htdocs/CRUD_MVC/View/InsertStock.php</file>
-            <file>file:/C:/xampp/htdocs/CRUD_MVC/View/listStock.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/View/template/header.html</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Controller/StoreController.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Model/Stock.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Model/Family.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Controller/Controllers.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/View/listStore.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Controller/StockController.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Model/Store.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Controller/ProductController.php</file>
+            <file>file:/C:/xampp/htdocs/CRUD_MVC/Controller/FamilyController.php</file>
         </group>
     </open-files>
 </project-private>

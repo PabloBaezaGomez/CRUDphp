@@ -74,3 +74,5 @@ try {
 } catch (AppException $e) {
     ErrorController::handleException($e, $smarty);
 }
+
+controllers\Controllers::footer();

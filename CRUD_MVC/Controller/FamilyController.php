@@ -7,9 +7,12 @@ use model;
 class FamilyController {
 
     public static function CRUDControllerFamilies() {
+        require_once 'View/template/header.html';
         $families = \model\Family::getFamilies();
         require_once 'View/InsertFamily.php';
+        require_once 'View/template/closeHeader.html';
         require_once 'View/listFamilies.php';
+        require_once 'View/template/footer.html';
     }
 
     public static function insertFamily() {

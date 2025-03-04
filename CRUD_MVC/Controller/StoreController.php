@@ -7,9 +7,12 @@ use model;
 class StoreController {
 
     public static function CRUDControllerStore() {
+        require_once 'View/template/header.html';
         $stores = \model\Store::getStores();
         require_once 'View/InsertStore.php';
+        require_once 'View/template/closeHeader.html';
         require_once 'View/listStore.php';
+        require_once 'View/template/footer.html';
     }
 
     public static function insertStore() {
